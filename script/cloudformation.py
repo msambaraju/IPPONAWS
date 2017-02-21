@@ -35,10 +35,7 @@ for opt, arg in options:
         waittime = arg
     elif opt == '--parameters':
         stackparams = arg
-''' --accesskey=AKIAIGHMAUKGA3XEZ42Q  --secret=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 
-  --parameters=keyname:MallikEC2Key  --stackname=mydockerstack  --rollbacktimeout=10  --waittime=120 
-  --bucketname=mscldtemp001 --filename=mytemplate --fileloc='/Users/malliksambaraju/workspaces/gitprojects/HelloWorld/template/docker_server.template'.
- '''       
+
 print accessKey
 print secretKey
 print stackName
