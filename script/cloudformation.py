@@ -36,12 +36,12 @@ for opt, arg in options:
     elif opt == '--parameters':
         stackparams = arg
 
-print accessKey
-print secretKey
-print stackName
-print rollbacktimeout
-print waittime
-print stackparams
+#print accessKey
+#print secretKey
+#print stackName
+#print rollbacktimeout
+#print waittime
+#print stackparams
 
 parameters = {}
 
@@ -56,7 +56,7 @@ import ipponcloudformation
 
 s3url = ippons3.uploadFile(accessKey, secretKey, bucketname, filename, filelocation)
 
-print s3url
+#print s3url
 
 output = ipponcloudformation.createStackAndWaitForStatus(stackName, s3url, parameters, 
                                                 accessKey, secretKey, rollbacktimeout, waittime)
