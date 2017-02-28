@@ -3,13 +3,28 @@
 '''\nCloudformation script usage
 Arguments are needed to execute the script
 '''   
-import getopt
-import sys
+
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--accesskey')
+parser.add_argument('--secret')
+parser.add_argument('--keyname')
+parser.add_argument('--stackname')
+parser.add_argument('--rollbacktimeout')
+parser.add_argument('--waittime')
+parser.add_argument('--s3filename')
+parser.add_argument('--s3fileloc')
+parser.add_argument('--bucketname')
+parser.add_argument('--parameters')
+parser.add_argument('--task')
+
+myargs = parser.parse_args()
   
 
 # accesskey, secret,keyname, stackname, rollbacktimeout, waittime
-options, remainder = getopt.getopt(sys.argv[1:], '', ['accesskey=','secret=','keyname=','stackname=','rollbacktimeout=','waittime=',
-                                                      'stackname=','filename=','fileloc=', 'bucketname=','parameters='])
+'''options, remainder = getopt.getopt(sys.argv[1:], '', ['accesskey=','secret=','keyname=','stackname=','rollbacktimeout=','waittime=',
+                                                      'stackname=','s3filename=','s3fileloc=', 'bucketname=','parameters='])
     
 if len(options) == 0 :
     print sys.exit(__doc__)
@@ -34,7 +49,7 @@ for opt, arg in options:
     elif opt == '--waittime':
         waittime = arg
     elif opt == '--parameters':
-        stackparams = arg
+        stackparams = arg'''
 
 #print accessKey
 #print secretKey
@@ -45,7 +60,7 @@ for opt, arg in options:
 
 parameters = {}
 
-allparams = stackparams.split(',')
+allparams = myargs.parameters.split(',')
 for eachparam in allparams:
     stackparam = eachparam.split(':')
     parameters[stackparam[0]] = stackparam[1]
@@ -54,11 +69,12 @@ for eachparam in allparams:
 import ippons3
 import ipponcloudformation
 
-s3url = ippons3.uploadFile(accessKey, secretKey, bucketname, filename, filelocation)
+if myargs.task == 'deletestack' :
+    ipponcloudformation.deleteStackAndWaitForStatus(myargs.stackname, myargs.accesskey, myargs.secret, myargs.waittime)
+else :
+    s3url = ippons3.uploadFile(myargs.accesskey, myargs.secret, myargs.bucketname, myargs.s3filename, myargs.s3fileloc)
 
-#print s3url
-
-output = ipponcloudformation.createStackAndWaitForStatus(stackName, s3url, parameters, 
-                                                accessKey, secretKey, rollbacktimeout, waittime)
-print output
+    output = ipponcloudformation.createStackAndWaitForStatus(myargs.stackname, s3url, parameters, 
+                                                myargs.accesskey, myargs.secret, myargs.rollbacktimeout,                                                 myargs.waittime)
+    print output
 
