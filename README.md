@@ -66,11 +66,8 @@ The below code snippet is used to delete a stack
 ## Motivation
 
 The idea behind the project is to be able to build, create aws environment and deploy a microservice into it. 
-Once a aws stack is created a task can be created to ssh into an docker host and execute the docker commands as
-needed. Below is the sample gradle script to ssh. If remote API is enabled on the docker host then api can be invoked
-instead of ssh.
-
-
+Once a aws stack is created, a task can be created to ssh into a docker host and execute the docker commands as
+needed. The input to the task could be an Output (such as host ip) from the createAWSStack. Below is the sample gradle script to ssh. If remote API is enabled on the docker host then api can be invoked instead of ssh.
 
 
     remotes {
